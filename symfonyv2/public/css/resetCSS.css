@@ -1,0 +1,73 @@
+/* RESET CSS */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Taille de la police */
+html {
+    font-size: 16px;
+}
+
+/* Listes */
+ul,
+ol {
+    list-style: none;
+}
+
+/* Liens */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Images */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tableaux */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Formulaires */
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #ccc;
+}
+
+/* Boutons */
+button {
+    cursor: pointer;
+}
+
+/* Éléments HTML5 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+/* Boîte-dimensionnement */
+*,
+::before,
+::after {
+    box-sizing: border-box;
+}

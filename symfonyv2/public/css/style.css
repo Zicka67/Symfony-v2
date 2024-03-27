@@ -1,3 +1,172 @@
-h1 {
-    color: red;
+/* Conteneur principal */
+.main-container {
+    width: 80vw;
+    margin: 0 auto;
+    /* background-color: red; */
 }
+
+.main-container-nav {
+    height: 100px;
+}
+
+.nav-container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: aqua; */
+    height: 60px;
+}
+
+.nav-container h1 {
+    margin-top: 5px;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+/* Titre du site */
+.site-title {
+    margin: 0;
+}
+
+/* Barre de navigation */
+nav {
+    margin: 0;
+    padding: 0;
+}
+
+.nav-middle-links {
+    margin-left: -20px;
+}
+
+.second-nav {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 20px;
+    height: 50px;
+}
+
+.second-nav a{
+    color: #333;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+.second-nav a:hover{
+    color: #000;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 20px;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+nav ul li a:hover {
+    color: #000;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+/* nav-right-links */
+.nav-right-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-right-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+.nav-right-links a:hover {
+    color: #000;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+
+/* Footer */
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-margin {
+    margin-left: 45%;
+}
+
+/* Fixer le footer en bas de page */
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.footer-right-links {
+  display: flex;
+  align-items: center;
+}
+
+.footer-right-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: #fff;
+  font-family: "Alegreya Sans", sans-serif;
+}
+
+.footer-right-links a:hover {
+  color: #000;
+  font-family: "Alegreya Sans", sans-serif;
+}
+
+/* *******PRODUITS******** */
+.produit-container {
+    margin-top: 50px;
+}
+
+.card {
+    height: 500px;
+    width: 30%;
+    background-color: aqua;
+    /* margin: 0 5px; */
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+
+
+
+
+
+
+
