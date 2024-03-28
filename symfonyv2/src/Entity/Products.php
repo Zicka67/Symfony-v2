@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\ProductsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping\ManyToMany;
 
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
 class Products
@@ -31,6 +34,15 @@ class Products
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $thumbnail = null;
+
+    #[ManyToMany(targetEntity: Flavor::class, inversedBy: 'products')]
+    private Collection $flavors;
+
+    public function __construct()
+    {
+        $this->flavors = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -105,6 +117,27 @@ class Products
     public function setThumbnail(?string $thumbnail): static
     {
         $this->thumbnail = $thumbnail;
+
+        return $this;
+    }
+    
+    public function getFlavors(): Collection
+    {
+        return $this->flavors;
+    }
+
+    public function addFlavor(Flavor $flavor): self
+    {
+        if (!$this->flavors->contains($flavor)) {
+            $this->flavors[] = $flavor;
+        }
+
+        return $this;
+    }
+
+    public function removeFlavor(Flavor $flavor): self
+    {
+        $this->flavors->removeElement($flavor);
 
         return $this;
     }
