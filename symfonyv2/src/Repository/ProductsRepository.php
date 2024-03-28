@@ -21,6 +21,18 @@ class ProductsRepository extends ServiceEntityRepository
         parent::__construct($registry, Products::class);
     }
 
+    public function findBySlugContainingWhey(): array
+    {
+        return $this->createQueryBuilder('p')
+        ->leftJoin('p.flavors', 'f')
+        ->addSelect('f')
+        ->where('p.slug LIKE :slug')
+        ->setParameter('slug', '%whey%')
+        ->getQuery()
+        ->getResult();
+    }
+
+
     //    /**
     //     * @return Products[] Returns an array of Products objects
     //     */
