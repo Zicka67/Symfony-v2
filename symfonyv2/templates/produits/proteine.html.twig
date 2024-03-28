@@ -9,12 +9,32 @@
         <h1>Nos produits</h1>
 
         <div class="card-container">
-            <div class="card"></div>
-            <div class="card"></div>
-            <div class="card"></div>
+            {% for product in wheyProducts %}
+                <div class="card">
+                    <h2>{{ product.name }}</h2>
+                    <p>{{ product.content }}</p>
+                    <img class="product-img" src="{{ product.thumbnail }}" alt="">
+        
+                    {% if product.flavors is not empty %}
+                    <select class="product-select" name="flavor" id="flavor_{{ product.id }}">
+                        {% for flavor in product.flavors %}
+                            <option value="{{ flavor.id }}">{{ flavor.flavorName }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <p>Pas de goûts disponibles pour ce produit.</p>
+                {% endif %}
+                </div>
+            {% else %}
+                <div class="card">
+                    Aucun produit contenant 'Whey' trouvé.
+                </div>
+            {% endfor %}
         </div>
 
     </div>
+
+    
     
 
 {% endblock %}
