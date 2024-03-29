@@ -38,6 +38,12 @@ class Products
     #[ManyToMany(targetEntity: Flavor::class, inversedBy: 'products')]
     private Collection $flavors;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isBestseller = null;
+
+    #[ORM\Column]
+    private ?int $price = null;
+
     public function __construct()
     {
         $this->flavors = new ArrayCollection();
@@ -138,6 +144,30 @@ class Products
     public function removeFlavor(Flavor $flavor): self
     {
         $this->flavors->removeElement($flavor);
+
+        return $this;
+    }
+
+    public function isIsBestseller(): ?bool
+    {
+        return $this->isBestseller;
+    }
+
+    public function setIsBestseller(?bool $isBestseller): static
+    {
+        $this->isBestseller = $isBestseller;
+
+        return $this;
+    }
+
+    public function getPrice(): ?int
+    {
+        return $this->price;
+    }
+
+    public function setPrice(int $price): static
+    {
+        $this->price = $price;
 
         return $this;
     }
