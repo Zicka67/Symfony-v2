@@ -32,6 +32,15 @@ class ProductsRepository extends ServiceEntityRepository
         ->getResult();
     }
 
+    public function findBar(): array
+    {
+        return $this->createQueryBuilder('p')
+        ->where('p.slug LIKE :slug')
+        ->setParameter('slug', '%barre%')
+        ->getQuery()
+        ->getResult();
+    }
+
 
     //    /**
     //     * @return Products[] Returns an array of Products objects
