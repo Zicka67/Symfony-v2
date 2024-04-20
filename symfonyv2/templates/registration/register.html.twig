@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Inscription{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
@@ -11,7 +11,7 @@
 
         <div class="register-container">
 
-            <h1>Je suis nouveau client !</h1>
+            <h1 class="register-title">Je suis nouveau client !</h1>
 
             {{ form_errors(registrationForm) }}
             {{ form_start(registrationForm) }}
