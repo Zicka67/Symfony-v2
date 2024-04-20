@@ -1,5 +1,5 @@
 /* ******* FONT ******* */
-h1, h2, h3, h4, h5, p, a, select {
+h1, h2, h3, h4, h5, p, a, select, label {
     font-family: "Alegreya Sans", sans-serif;
 }
 
@@ -327,6 +327,11 @@ footer {
 .form-control {
     display: block; 
     width: 300px; 
+}
+
+.register-title {
+    margin-top: -50px;
+    margin-bottom: 50px;
 }
 
 
