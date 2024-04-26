@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier{% endblock %}
+
+{% block body %}
+<div class="cart-container">
+
+    <div class="card-center">
+        <h1 class="panier-title">Panier</h1>
+        {% for item in items %}
+        <div class="card-panier">
+            <div class="card-panier-info">
+                <img class="card-panier-img" src="{{ item.product.thumbnail }}" alt="{{ item.product.name }}">
+                <div>
+                    <p class="panier-product-name">{{ item.product.name }}</p>
+                    <p class="panier-product-availability">Disponible immédiatement</p>
+                </div>
+            </div>
+            <div class="card-panier-quantity">
+                <a href="{{ path('cart_decrease', {'id': item.product.id}) }}" class="quantity-modify decrease">-</a>
+                <span class="quantity">{{ item.quantity }}</span>
+                <a href="{{ path('cart_increase', {'id': item.product.id}) }}" class="quantity-modify increase">+</a>
+            </div>
+            <p class="panier-product-price">{{ (item.product.price * item.quantity) / 100 }} €</p>
+            <a href="{{ path('cart_remove_all', {'id': item.product.id}) }}" class="delete-item">×</a>
+        </div>
+        {% else %}
+        <p>Votre panier est vide.</p>
+        {% endfor %}
+    </div>
+
+    <div class="card-right">
+        <h1 class="panier-title">Résumé</h1>
+        <div class="total-price">
+            <p class="price">Total du panier: <strong>{{ total / 100 }} €</strong> </p>
+            <p class="price">Livraison:  <strong>4.50 €</strong></p>
+        </div>
+
+        <div class="total-price">
+            <p class="price">Total (TTC) <strong>{{ total / 100 + 4.5}} €</strong> </p>
+           
+        </div>
+        <a href="" class="button-card product-select2">
+            Payer
+        </a>
+       
+    </div>
+</div>
+{% endblock %}
+
+
