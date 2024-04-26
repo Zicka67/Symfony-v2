@@ -2,13 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Flavor;
-use App\Entity\Products;
-use App\Repository\FlavorRepository;
 use App\Repository\ProductsRepository;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
@@ -22,13 +19,11 @@ class HomeController extends AbstractController
     }
 
     #[Route('/proteines', name: 'home_prot')]
-    public function showProt(ProductsRepository $productsRepository, FlavorRepository $flavorRepository): Response
+    public function showProt(ProductsRepository $productsRepository): Response
     {
 
         $wheyProducts = $productsRepository->findBySlugContainingWhey();
         $bars = $productsRepository->findBar();
-        // dd($bars);
-        // dd($flavor);
 
         return $this->render('produits/proteine.html.twig', [
             'controller_name' => 'HomeController',
@@ -38,7 +33,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/barre', name: 'home_barre')]
-    public function showBar(ProductsRepository $productsRepository, FlavorRepository $flavorRepository): Response
+    public function showBar(ProductsRepository $productsRepository): Response
     {
 
         $wheyProducts = $productsRepository->findBySlugContainingWhey();
@@ -52,5 +47,41 @@ class HomeController extends AbstractController
         ]);
     }
 
+    private function calculateCartTotal(SessionInterface $session, ProductsRepository $productsRepository)
+    {
+        $cart = $session->get('cart', []);
+        $total = 0;
+
+        foreach ($cart as $id => $quantity) {
+            $product = $productsRepository->find($id);
+            if ($product) {
+                $total += ($product->getPrice() * $quantity);
+            }
+        }
+
+        return $total;
+    }
+
+    #[Route('/cart', name: 'cart_show')]
+    public function show(SessionInterface $session, ProductsRepository $productsRepository): Response
+    {
+        $cart = $session->get('cart', []);
+        $cartWithData = [];
+        $total = $this->calculateCartTotal($session, $productsRepository);
+
+        foreach ($cart as $id => $quantity) {
+            $cartWithData[] = [
+                'product' => $productsRepository->find($id),
+                'quantity' => $quantity
+            ];
+        }
+
+        return $this->render('cart/index.html.twig', [
+            'items' => $cartWithData,
+            'total' => $total
+        ]);
+    }
+
+    
 
 }
