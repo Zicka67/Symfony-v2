@@ -8,7 +8,7 @@ Les principaux points sont :
 - Possibilité de payer son panier via Stripe et son API
 - Une approche pour le front très proche du modèle
 
-  ![Capture d'écran du projet](https://github.com/Zicka67/Symfony-v2/blob/main/public/img/Homepage.png)
+  ![Capture d'écran du projet](https://github.com/Zicka67/Symfony-v2/blob/master/symfonyv2/public/img/Homepage.png)
   
 
 PANIER :
