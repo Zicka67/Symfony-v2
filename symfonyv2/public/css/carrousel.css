@@ -1,0 +1,104 @@
+.carousel-container {
+    position: relative;
+    width: 100vw; 
+    height: auto; 
+    /* margin: 0; */
+    overflow: hidden;
+}
+
+.carousel-slide {
+    display: flex;
+    width: calc(100% * 3); 
+    transition: transform 0.4s ease-in-out;
+}
+
+.carousel-slide img {
+    width: 100vw; 
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.button-carousel {
+    position: absolute;
+    top: 50vh;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: #333; 
+    color: white;
+    border: none;
+    padding: 10px 20px; 
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+#prevBtn {
+    right: calc(10vw + 100px); 
+    bottom: 20px; 
+    position: absolute;
+    z-index: 10;
+    background-color: #333; 
+    color: white; 
+    border: none;
+    padding: 10px 20px; 
+    cursor: pointer;
+    opacity: 0.7; 
+    font-weight: 600;
+}
+
+#nextBtn {
+    right: 10vw; 
+    bottom: 20px; 
+    position: absolute; 
+    z-index: 10;
+    background-color: #333; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    opacity: 0.7; 
+    font-weight: 600;
+}
+
+.try-now-btn {
+    left: 15vw; 
+    top: 55%; 
+    position: absolute; 
+    z-index: 10;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff; 
+    text-decoration: none; 
+    opacity: 0.7; 
+    transition: 0.5s;
+    font-weight: 600;
+    border-radius: 20px;
+}
+
+.try-now-btn:hover {
+    background-color: #fff;
+    color: #000; 
+    text-decoration: none; 
+    opacity: 0.7; 
+    transition: 0.5s;
+}
+
+.carrousel-text-container {
+    left: 15vw; 
+    top: 35%; 
+    position: absolute; 
+    z-index: 10;
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+.carrousel-main-title {
+    font-style: italic;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.carrousel-secondary-title {
+    font-weight: 400;
+    font-size: 1rem;
+}
+

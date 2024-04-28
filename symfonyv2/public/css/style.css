@@ -124,24 +124,25 @@ nav ul li a:hover {
     align-items: center;
 }
 
-.footer-margin {
+.footer-margin {    
     margin-left: 45%;
 }
 
 /* Fixer le footer en bas de page */
 body {
-  position: relative;
-  min-height: 100vh;
+/* position: relative; */
+  min-height: 100vh; 
 }
 
 footer {
-  position: absolute;
-  bottom: -17px;
+  /* position: absolute; */
+  /* bottom: -17px; */
   width: 100%;
   background-color: #333;
   color: #fff;
   padding: 10px;
   text-align: center;
+  margin-bottom: -8px;
 
 }
 
@@ -179,6 +180,7 @@ footer {
     flex-direction: column;
     background-color: #fff;
     transition: transform 0.5s ease;
+    margin-bottom: 20px;
 }
 
 .card-bar {
@@ -266,7 +268,7 @@ footer {
 .product-select2 {
     margin: 10px auto;
     padding: 10px;
-    border: 1px solid #ccc; 
+    /* border: 1px solid #ccc;  */
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); 
     border-radius: 20px; 
     background-color: rgb(0, 0, 0);
@@ -276,6 +278,13 @@ footer {
     appearance: none;
     color: #fff;
     font-weight: bold;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.button-card {
+    margin-top: 30px;
 }
 
 .color {
@@ -333,6 +342,120 @@ footer {
     margin-top: -50px;
     margin-bottom: 50px;
 }
+
+.panier-title {
+    margin: 0 auto;
+}
+
+.panier-title-secondary {
+    margin: 20px auto;
+}
+
+
+/* ******************** */
+
+.card-center {
+    height: auto;
+    width: 50%; 
+    box-sizing: border-box; 
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    transition: transform 0.5s ease;
+    margin: 50px 0 50px 0;
+}
+
+.card-panier {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding: 0 30px 20px 30px;
+}
+
+.card-panier-info {
+    display: flex;
+    align-items: center;
+}
+
+.card-panier-img {
+    width: 50px;
+    margin-right: 10px;
+}
+
+.panier-product-name {
+    font-weight: bold;
+    margin: 0;
+}
+
+.panier-product-availability {
+    color: green;
+    margin: 0;
+}
+
+.card-panier-quantity {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-modify {
+    background: none;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.quantity {
+    margin: 0 10px;
+}
+
+.delete-item {
+    border: none;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.panier-product-price {
+    font-size: 1.2em;
+    color: #555;
+}
+
+.card-right {
+    height: 650px;
+    width: 30%;
+    margin: 50px 0 50px 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    margin-left: 40px;
+}
+
+.cart-container {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.total-price {
+    margin-top: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.price {
+   margin: 0 20px 22px 20px;
+}
+
+.price strong {
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: -25px;
+}
+
 
 
 
