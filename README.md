@@ -11,22 +11,22 @@ Les principaux points sont :
 Panier :
 1- Récupération du panier depuis la session
 
-"$cart = $session->get('cart', []);"
+*$cart = $session->get('cart', []);*
 
 2- Ajouter un produit en panier
 
-"if (!empty($cart[$id])) {
+*if (!empty($cart[$id])) {
             $cart[$id]++;
         } else {
             $cart[$id] = 1;
-        }"
+        }*
 
 3- Calcul du total du panier
 
-$total = 0;
+*$total = 0;
 foreach ($cart as $id => $quantity) {
             $product = $productsRepository->find($id);
             if ($product) {
                 $total += ($product->getPrice() * $quantity);
             }
-        }
+        }*
