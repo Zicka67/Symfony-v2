@@ -34,3 +34,5 @@ foreach ($cart as $id => $quantity) {
                 $total += ($product->getPrice() * $quantity);
             }
         }*
+
+ ![Capture d'écran du projet](https://github.com/Zicka67/Symfony-v2/blob/master/symfonyv2/public/img/Panier.png)
