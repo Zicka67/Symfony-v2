@@ -90,15 +90,18 @@
     font-family: "Alegreya Sans", sans-serif;
 }
 
-.carrousel-main-title {
+#carousel-text-main {
     font-style: italic;
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: bold;
     margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #000;
 }
 
-.carrousel-secondary-title {
+#carousel-text-secondary {
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    color: #000;
 }
 
