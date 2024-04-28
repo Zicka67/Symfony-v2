@@ -8,7 +8,8 @@ Les principaux points sont :
 - Possibilité de payer son panier via Stripe et son API
 - Une approche pour le front très proche du modèle
 
-Panier :
+PANIER :
+
 1- Récupération du panier depuis la session
 
 *$cart = $session->get('cart', []);*
