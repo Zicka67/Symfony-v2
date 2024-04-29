@@ -4,15 +4,22 @@ h1, h2, h3, h4, h5, p, a, select, label {
 }
 
 body {
-    background-color: #f7f4ec;
+    background-color: #F8F8F8;
 }
 
-/* Conteneur principal */
-.main-container {
-    width: 90vw;
-    margin: 0 auto;
-    padding: 0 10%;
+.main-container-flex {
+    display: flex;
+    width: 100vw;
 }
+
+.main-container {
+    width: 80vw;
+    /* margin-left: 20vw; */
+    /* padding: 0 0vw; */
+    height: auto;
+    flex-wrap: wrap;
+}
+
 
 .wrapper {
     width: 100%;
@@ -285,10 +292,12 @@ footer {
 
 .button-card {
     margin-top: 30px;
+    width: 420px;
+    font-size: 1.2rem;
 }
 
 .color {
-    background-color: #f7f4eca9;
+    background-color: #F8F8F8;
     height: auto;
 }
 
@@ -302,7 +311,6 @@ footer {
     font-weight: bold;
     font-family: "Alegreya Sans", sans-serif;
     position: absolute;
-    /* display: none; */
 }
 
 /* *********** REGISTER **********  */
@@ -352,7 +360,7 @@ footer {
 }
 
 
-/* ******************** */
+/* ********* PANIER *********** */
 
 .card-center {
     height: auto;
@@ -390,7 +398,7 @@ footer {
 }
 
 .panier-product-availability {
-    color: green;
+    color: #3a786a;
     margin: 0;
 }
 
@@ -455,6 +463,68 @@ footer {
     justify-content: flex-end;
     margin-top: -25px;
 }
+
+/* *************** ASIDE **********  */
+
+.aside-produit-container {
+    /* background-color: aqua; */
+    width: 11vw;
+    margin-top: 65px;
+    margin-left: 9.5vw;
+}
+
+.aside-title {
+    font-weight: 400;
+    font-size: 2.2rem;
+}
+
+.aside-ul {
+    margin-top: 35px;
+    margin-left: 15px;
+}
+
+.asside-li {
+    padding: 10px 0;
+    font-size: 1rem;
+}
+
+/* *************** REDUCTION **********  */
+
+.discount-form {
+    display: flex; 
+    border-radius: 20px; 
+    overflow: hidden; 
+    width: 420px; 
+    border: 1px solid #ccc;
+    margin: 20px auto; 
+}
+
+.discount-input {
+    flex-grow: 1; 
+    padding: 10px; 
+    border: none;
+    outline: none; 
+    font-family: "Alegreya Sans", sans-serif;
+}
+
+.discount-submit {
+    background-color: #3a786a; 
+    border: none; 
+    padding: 10px 20px; 
+    color: white; 
+    cursor: pointer; 
+    transition: 0.5s;
+}
+
+.discount-submit:hover {
+    background-color: #20584C;  
+    transition: 0.5s;
+}
+
+.check-icon {
+    font-size: 1.2em;
+}
+
 
 
 

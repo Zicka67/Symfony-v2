@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   
     let counter = 0;
     const size = images[0].clientWidth;
-    let autoSlideInterval = setInterval(moveToNextSlide, 8000); 
+    let autoSlideInterval = setInterval(moveToNextSlide, 6000); 
     let direction = 1; // 1 pour avancer, -1 pour reculer
 
    
@@ -72,4 +72,42 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
   
   });
+
+
+  // ***********************  
+
+  document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('coupon-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêche le formulaire de se soumettre normalement
+
+        var couponCode = document.getElementById('coupon-code').value;
+
+        // Effectue une requête AJAX pour appliquer le coupon
+        var xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/cart', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Accept', 'application/json'); // Indique que la réponse attendue est en JSON
+        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Parse la réponse JSON
+                var response = JSON.parse(xhr.responseText);
+                // Met à jour le contenu de l'élément price
+                document.getElementById('priceWithDelivery').innerHTML = 'Total (TTC) <strong>' + (response.total / 100 + 4.5 ).toFixed(2) + ' €</strong>';
+                document.getElementById('price').innerHTML = 'Total (TTC) <strong>' + (response.total / 100 ).toFixed(2) + ' €</strong>';
+            }
+        };
+        xhr.send('coupon_code=' + encodeURIComponent(couponCode));
+    });
+});
+
+
+
+
+
+
+
+
+
   
