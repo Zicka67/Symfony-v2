@@ -5,49 +5,97 @@
 {% block body %}
 <div class="color">
 
+    <div class="main-container-flex">
 
-    <div class="main-container produit-container">
-        <h1 class="title">Nos protéines</h1>
-        
-        <p>{{ wheyProducts|length }} résultat(s)</p>
-        <div class="card-container">
-         
+        <div class="aside-produit-container">
+            <h1 class="aside-title">Catégories</h1>
+            <ul class="aside-ul"> 
+                <li class="asside-li">
+                    <a href="{{ path('home') }}">Offres</a>
+                </li>
+                <li class="asside-li">
+                    <a href="{{ path('home_prot') }}">Protéines en poudres</a>
+                </li>
+                <li class="asside-li">
+                    <a href="{{ path('home_barre') }}">Barres</a>
+                </li>
+                <li class="asside-li">
+                    <a href="">En-cas</a>
+                </li>
+                <li class="asside-li">
+                    <a href="">Suppléments</a>
+                </li>
+                <li class="asside-li">
+                    <a href="">Acides aminés</a>
+                </li>
+                <li class="asside-li">
+                    <a href="">Cuisine fitness</a>
+                </li>
+                <li class="asside-li">
+                    <a href="">Pâtes à tartiner</a>
+                </li>
+                <li class="asside-li">
+                    <a href="">Muesli & porridge</a>
+                </li>
+                <li class="asside-li">
+                    <a href="">Multi-packs</a>
+                </li>
+                <li class="asside-li">
+                    <a href="">packs</a>
+                </li>
+            </ul>
+        </div>
 
-            {% for product in wheyProducts %}
-                <div class="card">
-                    <div class="product-card">
-                        {% if product.isBestseller %}
-                          <div class="bestseller" style="display: block;"> BESTSELLER </div>
+
+        <div class="main-container produit-container">
+
+            
+
+
+            <h1 class="title">Nos protéines</h1>
+            
+            <p>{{ wheyProducts|length }} résultat(s)</p>
+            <div class="card-container">
+            
+
+                {% for product in wheyProducts %}
+                    <div class="card">
+                        <div class="product-card">
+                            {% if product.isBestseller %}
+                            <div class="bestseller" style="display: block;"> BESTSELLER </div>
+                            {% endif %}
+                        </div>
+                        <img class="product-img" src="{{ product.thumbnail }}" alt="">
+                        <h2 class="product-name">{{ product.name }}</h2>
+                        <p class="product-content">{{ product.content }}</p>
+            
+                        {% if product.flavors is not empty %}
+                        
+                        <select class="product-select" name="flavor" id="flavor_{{ product.id }}">
+                            {% for flavor in product.flavors %}
+                            <option class="select-wrapper" value="{{ flavor.id }}">
+                            {{ flavor.flavorName }}
+                        {% endfor %}
+                        </select>
+                            {% else %}
+                                <p class="product-content margin-product-content">Pas de goûts disponibles pour ce produit.</p>
                         {% endif %}
+                        <p class="product-price">{{ product.price / 100 }} €</p>
+
+                        <a href="{{ path('cart_add', {'id': product.id}) }}" class="button-card product-select2">
+                            Ajouter au panier
+                        </a>
+
                     </div>
-                    <img class="product-img" src="{{ product.thumbnail }}" alt="">
-                    <h2 class="product-name">{{ product.name }}</h2>
-                    <p class="product-content">{{ product.content }}</p>
-        
-                    {% if product.flavors is not empty %}
-                    
-                    <select class="product-select" name="flavor" id="flavor_{{ product.id }}">
-                        {% for flavor in product.flavors %}
-                          <option class="select-wrapper" value="{{ flavor.id }}">
-                          {{ flavor.flavorName }}
-                      {% endfor %}
-                    </select>
-                        {% else %}
-                            <p class="product-content margin-product-content">Pas de goûts disponibles pour ce produit.</p>
-                    {% endif %}
-                    <p class="product-price">{{ product.price / 100 }} €</p>
-                    <button class="button-card product-select2">
-                        <a href="">Ajouter au panier</a> 
-                    </button>
-                </div>
-        
-            {% endfor %}
-        </div>
+            
+                {% endfor %}
+            </div>
 
-        <div>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi possimus asperiores culpa, laudantium maiores aperiam quas! Perspiciatis, exercitationem unde! Sed non laboriosam inventore magni illum consectetur eos corporis officiis ratione.</p>
-        </div>
+            {# <div>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi possimus asperiores culpa, laudantium maiores aperiam quas! Perspiciatis, exercitationem unde! Sed non laboriosam inventore magni illum consectetur eos corporis officiis ratione.</p>
+            </div> #}
 
+        </div>
     </div>
 
 </div>
