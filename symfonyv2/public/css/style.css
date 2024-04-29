@@ -411,8 +411,9 @@ footer {
 .quantity-modify {
     background: none;
     border: 1px solid #ccc;
-    padding: 5px 10px;
+    padding: 3px 8px;
     cursor: pointer;
+    background-color: #dedede;
 }
 
 .quantity {
