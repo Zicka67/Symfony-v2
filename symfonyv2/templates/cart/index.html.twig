@@ -32,14 +32,24 @@
     <div class="card-right">
         <h1 class="panier-title">Résumé</h1>
         <div class="total-price">
-            <p class="price">Total du panier: <strong>{{ total / 100 }} €</strong> </p>
-            <p class="price">Livraison:  <strong>4.50 €</strong></p>
+
+            {# <p class="price">Total du panier: <strong>{{ total / 100 }} €</strong> </p> #}
+            <p id="price" class="price">Total du panier: <strong>{{ cartTotalWithDiscount / 100 }} €</strong> </p>
+            <p class="price">Livraison:  <strong>{{ deliveryCost }}</strong></p>
+
+            <form id="coupon-form" class="discount-form" action="{{ path('cart_show') }}" method="post">
+                <input type="text" id="coupon-code" name="coupon_code" placeholder="Entrez le code de réduction..." class="discount-input">
+                <button type="submit" class="discount-submit">
+                    <i class="check-icon">✓</i>
+                </button>
+            </form>
+
         </div>
 
         <div class="total-price">
-            <p class="price">Total (TTC) <strong>{{ total / 100 + 4.5}} €</strong> </p>
-           
+            <p id="priceWithDelivery" class="price">Total (TTC) <strong>{{ (cartTotalWithDiscount + (deliveryCost * 100)) / 100 }} €</strong> </p>
         </div>
+
         <a href="" class="button-card product-select2">
             Payer
         </a>
@@ -47,5 +57,6 @@
     </div>
 </div>
 {% endblock %}
+
 
 
