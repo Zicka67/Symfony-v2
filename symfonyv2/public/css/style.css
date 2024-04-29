@@ -9,7 +9,7 @@ body {
 
 .main-container-flex {
     display: flex;
-    width: 100vw;
+    /* width: 100vw; */
 }
 
 .main-container {
@@ -112,10 +112,11 @@ nav ul li a:hover {
 }
 
 .nav-right-links a {
-    margin: 0 10px;
+    /* margin: 0 10px; */
     text-decoration: none;
     color: #333;
     font-family: "Alegreya Sans", sans-serif;
+    margin-left: 20px;
 }
 
 .nav-right-links a:hover {
@@ -207,7 +208,7 @@ footer {
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 25px;
-    background-color: #f7f4eca9;
+    background-color: #F8F8F8;
 }
 
 .product-img {

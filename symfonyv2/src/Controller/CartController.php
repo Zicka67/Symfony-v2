@@ -20,10 +20,6 @@ public function show(SessionInterface $session, ProductsRepository $productsRepo
     $cart = $session->get('cart', []);
     
     $cartWithData = [];
-    $total = $this->calculateCartTotal($session, $productsRepository);
-    // dd($total);
-    $deliveryCost = 4.50; 
-
     foreach ($cart as $id => $quantity) {
         $cartWithData[] = [
             'product' => $productsRepository->find($id),
@@ -31,46 +27,49 @@ public function show(SessionInterface $session, ProductsRepository $productsRepo
         ];
     }
 
-    // Vérification pour le code du coupon
-    $couponCode = $request->request->get('coupon_code');
+    $total = $this->calculateCartTotal($session, $productsRepository);
+    $deliveryCost = 4.50; 
 
-   
-    if ($couponCode) {
-        $coupon = $couponRepository->findOneBy(['code' => $couponCode, 'is_valid' => true]);
-        if ($coupon) {
-            $discountValue = $total * ($coupon->getDiscount() / 100);
-
-            $total -= $discountValue;
-            // Enregistrer le coupon et la nouvelle valeur totale dans la session
-            $session->set('cart_total_with_discount', $total);
-            $session->set('coupon', $couponCode);
-        } else {
-            // Ajouter un message flash pour indiquer que le coupon est invalide
-            // $this->addFlash('danger', 'Le coupon n\'est pas valide.');
-        }
-        
-    }
-    // var_dump($request->isXmlHttpRequest());
-    $cartTotalWithDiscount = $session->get('cart_total_with_discount') ?? $total;
-    // var_dump($request->isXmlHttpRequest());
-
-    // Si la requête est une requête AJAX, renvoie uniquement le prix total mis à jour en réponse JSON
+    // Vérification pour le code du coupon si c'est une requête AJAX
     if ($request->isXmlHttpRequest()) {
-        $response = new JsonResponse();
-        $response->setData([
-            'total' => $cartTotalWithDiscount
+        $couponCode = $request->request->get('coupon_code');
+        $couponTotalWithDiscount = $total;
+        
+        if ($couponCode) {
+            $coupon = $couponRepository->findOneBy(['code' => $couponCode, 'is_valid' => true]);
+            
+            if ($coupon) {
+                $discountValue = $total * ($coupon->getDiscount() / 100);
+                $couponTotalWithDiscount -= $discountValue;
+            } else {
+                // Si le coupon n'est pas valide, vous pouvez choisir de renvoyer une erreur ou simplement ignorer le coupon
+                return new JsonResponse(['error' => 'Coupon invalide'], 400);
+            }
+        }
+
+        $totalWithDelivery = $couponTotalWithDiscount + ($deliveryCost * 100);
+
+        // Enregistrer le coupon et la nouvelle valeur totale dans la session
+        $session->set('cart_total_with_discount', $couponTotalWithDiscount);
+        $session->set('coupon', $couponCode);
+
+        return new JsonResponse([
+            'total' => number_format($couponTotalWithDiscount / 100, 2, '.', ''),
+            'totalWithDelivery' => number_format($totalWithDelivery / 100, 2, '.', '')
         ]);
-        return $response;
     }
 
-    // Sinon, continuez avec le rendu de la vue normalement
+    $cartTotalWithDiscount = $session->get('cart_total_with_discount', $total);
+
+    // Rendu de la vue normalement pour les requêtes non AJAX
     return $this->render('cart/index.html.twig', [
         'items' => $cartWithData,
         'total' => $total,
         'cartTotalWithDiscount' => $cartTotalWithDiscount,
-        'deliveryCost' => $deliveryCost 
+        'deliveryCost' => $deliveryCost
     ]);
 }
+
 
     private function calculateCartTotal(SessionInterface $session, ProductsRepository $productsRepository)
     {
@@ -104,35 +103,69 @@ public function show(SessionInterface $session, ProductsRepository $productsRepo
     }
 
     #[Route('/cart/increase/{id}', name: 'cart_increase')]
-    public function increase($id, SessionInterface $session): Response
+    public function increase($id, SessionInterface $session, ProductsRepository $productsRepository, Request $request): Response
     {
         $cart = $session->get('cart', []);
+        $product = $productsRepository->find($id);
+        
+        if ($product) {
+            if (isset($cart[$id])) {
+                $cart[$id]++;
+            } else {
+                $cart[$id] = 1;
+            }
 
-        if (!empty($cart[$id])) {
-            $cart[$id]++;
+            $session->set('cart', $cart);
+
+            if ($request->isXmlHttpRequest()) {
+                $total = $this->calculateCartTotal($session, $productsRepository);
+                $deliveryCost = 4.50;
+                $productPrice = $product->getPrice() * $cart[$id]; 
+
+                return new JsonResponse([
+                    'total' => number_format($total / 100, 2),
+                    'totalWithDelivery' => number_format(($total + ($deliveryCost * 100)) / 100, 2),
+                    'productId' => $id,
+                    'productPrice' => number_format($productPrice / 100, 2) ,
+                    'productQuantity' => $cart[$id],
+                ]);
+            }
         }
 
-        $session->set('cart', $cart);
-
-        return $this->redirectToRoute('cart_show');
+        return $this->redirectToRoute('cart_show'); 
     }
 
     #[Route('/cart/decrease/{id}', name: 'cart_decrease')]
-    public function decrease($id, SessionInterface $session): Response
+    public function decrease($id, SessionInterface $session, ProductsRepository $productsRepository, Request $request): Response
     {
         $cart = $session->get('cart', []);
-
-        if (!empty($cart[$id])) {
-            if ($cart[$id] > 1) {
+        $product = $productsRepository->find($id);
+        
+        if ($product) {
+            if (!empty($cart[$id]) && $cart[$id] > 1) {
                 $cart[$id]--;
             } else {
                 unset($cart[$id]);
             }
+
+            $session->set('cart', $cart);
+
+            if ($request->isXmlHttpRequest()) {
+                $total = $this->calculateCartTotal($session, $productsRepository);
+                $deliveryCost = 4.50;
+                $productPrice = isset($cart[$id]) ? $product->getPrice() * $cart[$id] : 0; 
+
+                return new JsonResponse([
+                    'total' => number_format($total / 100, 2),
+                    'totalWithDelivery' => number_format(($total + ($deliveryCost * 100)) / 100, 2),
+                    'productId' => $id,
+                    'productPrice' => number_format($productPrice / 100, 2), 
+                    'productQuantity' => $cart[$id]
+                ]);
+            }
         }
 
-        $session->set('cart', $cart);
-
-        return $this->redirectToRoute('cart_show');
+        return $this->redirectToRoute('cart_show'); 
     }
 
 
@@ -167,29 +200,6 @@ public function show(SessionInterface $session, ProductsRepository $productsRepo
 
         return $this->redirectToRoute('cart_show');
     }
-
-    // #[Route('/cart/apply-coupon', name: 'cart_apply_coupon', methods: ['POST'])]
-    // public function applyCoupon(Request $request, SessionInterface $session, ProductsRepository $productsRepository, CouponRepository $couponRepository): Response
-    // {
-    //     $couponCode = $request->request->get('coupon_code');
-    //     $coupon = $couponRepository->findOneBy(['code' => $couponCode, 'is_valid' => true]);
-        
-    //     if (!$coupon) {
-    //         $this->addFlash('danger', 'Le coupon n\'est pas valide.');
-    //         return $this->redirectToRoute('cart_show');
-    //     }
-
-    //     $total = $this->calculateCartTotal($session, $productsRepository);
-    //     $discountValue = $total * ($coupon->getDiscount() / 100);
-    //     $newTotal = $total - $discountValue;
-
-    //     $session->set('cart_total_with_discount', $newTotal);
-    //     $session->set('coupon', $couponCode);
-        
-    //     $this->addFlash('success', 'Le coupon a été appliqué avec succès!');
-        
-    //     return $this->redirectToRoute('cart_show');
-    // }
 
     
 

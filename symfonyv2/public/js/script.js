@@ -77,30 +77,95 @@ document.addEventListener('DOMContentLoaded', (event) => {
   // ***********************  
 
   document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('coupon-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Empêche le formulaire de se soumettre normalement
+    // Attache les gestionnaires d'événements aux boutons pour augmenter, diminuer, et supprimer des produits
+    attachEventListeners('.quantity-modify.increase', 'href');
+    attachEventListeners('.quantity-modify.decrease', 'href');
+    attachEventListeners('.delete-item', 'href');
 
-        var couponCode = document.getElementById('coupon-code').value;
+    function attachEventListeners(selector, attribute) {
+        document.querySelectorAll(selector).forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Empêche le comportement par défaut
+                handleQuantityChange(this.getAttribute(attribute)); // Utilise l'attribut pour obtenir l'URL
+            });
+        });
+    }
 
-        // Effectue une requête AJAX pour appliquer le coupon
-        var xhr = new XMLHttpRequest();
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/cart', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.setRequestHeader('Accept', 'application/json'); // Indique que la réponse attendue est en JSON
-        xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Parse la réponse JSON
-                var response = JSON.parse(xhr.responseText);
-                // Met à jour le contenu de l'élément price
-                document.getElementById('priceWithDelivery').innerHTML = 'Total (TTC) <strong>' + (response.total / 100 + 4.5 ).toFixed(2) + ' €</strong>';
-                document.getElementById('price').innerHTML = 'Total (TTC) <strong>' + (response.total / 100 ).toFixed(2) + ' €</strong>';
+    function handleQuantityChange(url) {
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
             }
-        };
-        xhr.send('coupon_code=' + encodeURIComponent(couponCode));
-    });
+        })
+        .then(response => response.json())
+        .then(updateDOMElements)
+        .catch(error => console.error('Erreur:', error));
+    }
+
+    function updateDOMElements(data) {
+
+        document.getElementById('price').innerHTML = `Total du panier: <strong>${data.total} €</strong>`;
+        document.getElementById('priceWithDelivery').innerHTML = `Total (TTC) <strong>${data.totalWithDelivery} €</strong>`;
+    
+        if (data.productId) {
+            const productPriceElement = document.getElementById('product-price-' + data.productId);
+            const productQuantityElement = document.getElementById('product-quantity-' + data.productId);
+
+            if (productPriceElement) {
+                productPriceElement.innerHTML = `${data.productPrice} €`;
+            }
+
+            if (productQuantityElement) {
+                // console.log('Quantité avant mise à jour:', productQuantityElement.textContent);
+                productQuantityElement.textContent = data.productQuantity;
+                // console.log('Quantité après mise à jour:', productQuantityElement.textContent);
+            }
+            if (data.productPrice === '0.00') {
+                const productRow = document.getElementById('product-row-' + data.productId);
+                if (productRow) {
+                    productRow.remove();
+                }
+            }
+            if (data.removeProduct) {
+              const productRow = document.getElementById('product-row-' + data.productId);
+              if (productRow) {
+                  productRow.remove();
+              }
+          }
+        }
+    }
+
+      // Gestion de la soumission du formulaire de coupon
+  document.getElementById('coupon-form').addEventListener('submit', function(event) { 
+    event.preventDefault(); // Empêche le formulaire de se soumettre normalement
+    var couponCode = document.getElementById('coupon-code').value;
+    var data = new FormData();
+    data.append('coupon_code', couponCode);
+
+    fetch('/cart', {
+        method: 'POST',
+        body: data,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.total !== undefined && data.totalWithDelivery !== undefined) {
+            document.getElementById('priceWithDelivery').innerHTML = 'Total (TTC) <strong>' + data.totalWithDelivery + ' €</strong>';
+            document.getElementById('price').innerHTML = 'Total du panier: <strong>' + data.total + ' €</strong>';
+        } else {
+            console.error('Des données nécessaires sont manquantes dans la réponse JSON');
+        }
+    })
+    .catch(error => console.error('Erreur:', error));
+  });
+
+
 });
+
+
 
 
 

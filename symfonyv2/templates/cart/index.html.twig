@@ -17,11 +17,13 @@
                 </div>
             </div>
             <div class="card-panier-quantity">
-                <a href="{{ path('cart_decrease', {'id': item.product.id}) }}" class="quantity-modify decrease">-</a>
-                <span class="quantity">{{ item.quantity }}</span>
-                <a href="{{ path('cart_increase', {'id': item.product.id}) }}" class="quantity-modify increase">+</a>
+                <a href="{{ path('cart_decrease', {'id': item.product.id}) }}" class="quantity-modify decrease" data-id="{{ item.product.id }}">-</a>
+                <span id="product-quantity-{{ item.product.id }}" class="quantity">{{ item.quantity }}</span>
+                <a href="{{ path('cart_increase', {'id': item.product.id}) }}" class="quantity-modify increase" data-id="{{ item.product.id }}">+</a>
             </div>
-            <p class="panier-product-price">{{ (item.product.price * item.quantity) / 100 }} €</p>
+            {# <p class="panier-product-price">{{ (item.product.price * item.quantity) / 100 }} €</p> #}
+            <p id="product-price-{{ item.product.id }}" class="panier-product-price">{{ (item.product.price * item.quantity) / 100 }} €</p>
+
             <a href="{{ path('cart_remove_all', {'id': item.product.id}) }}" class="delete-item">×</a>
         </div>
         {% else %}
@@ -35,7 +37,7 @@
 
             {# <p class="price">Total du panier: <strong>{{ total / 100 }} €</strong> </p> #}
             <p id="price" class="price">Total du panier: <strong>{{ cartTotalWithDiscount / 100 }} €</strong> </p>
-            <p class="price">Livraison:  <strong>{{ deliveryCost }}</strong></p>
+            <p class="price">Livraison:  <strong>{{ deliveryCost }} €</strong></p>
 
             <form id="coupon-form" class="discount-form" action="{{ path('cart_show') }}" method="post">
                 <input type="text" id="coupon-code" name="coupon_code" placeholder="Entrez le code de réduction..." class="discount-input">
