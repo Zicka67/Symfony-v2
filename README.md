@@ -8,6 +8,9 @@ Les principaux points sont :
 - Possibilité de payer son panier via Stripe et son API
 - Une approche pour le front très proche du modèle
 
+- ![FOODSPRING](https://raw.githubusercontent.com/Zicka67/Symfony-v2/master/symfonyv2/public/img/Foodspring.webp)
+
+
 ![Capture d'écran du projet](https://github.com/Zicka67/Symfony-v2/blob/master/symfonyv2/public/img/Homepage.png)
   
 
